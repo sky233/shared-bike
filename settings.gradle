@@ -1,0 +1,4 @@
+include 'bike-admin'
+include 'bike-web'
+include 'bike-rest'
+

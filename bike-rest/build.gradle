@@ -1,0 +1,63 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'docker'
+apply plugin: 'org.springframework.boot'
+
+group = 'sky233'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+jar {
+    baseName = 'shared-bike'
+    archiveName = 'shared-bike.jar'
+}
+
+ext {
+    springCloudVersion = 'Dalston.SR4'
+    axonframeworkVersion = '3.0.6'
+}
+
+dependencies {
+
+    compile('com.google.guava:guava:21.0')
+    compile('org.apache.commons:commons-lang3:3.3.2')
+    compile('com.zaxxer:HikariCP:2.6.2')
+
+    compile("org.axonframework:axon-spring-boot-starter:${axonframeworkVersion}")
+
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.cloud:spring-cloud-core')
+    compile('org.springframework.cloud:spring-cloud-spring-service-connector')
+    compile('org.springframework.cloud:spring-cloud-cloudfoundry-connector')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    runtime('com.h2database:h2')
+    runtime('mysql:mysql-connector-java')
+    compileOnly('org.projectlombok:lombok')
+    testCompile("org.axonframework:axon-test:${axonframeworkVersion}")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+docker {
+    baseImage jar.baseName
+    maintainer 'Li Xingping "lixingping233@gmail.com"'
+}
+
+task image(type: Docker, dependsOn: build) {
+    push = false
+    dryRun = true
+    applicationName = jar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}

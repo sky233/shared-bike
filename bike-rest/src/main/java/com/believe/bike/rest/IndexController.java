@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Li Xingping
  */
-@RestController
+//@RestController
 public class IndexController {
 
   @GetMapping({"/", "index"})

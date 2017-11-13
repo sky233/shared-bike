@@ -1,0 +1,40 @@
+apply plugin: 'java'
+apply plugin: 'docker'
+apply plugin: 'com.moowork.node'
+
+/**
+ * Node task
+ */
+task cnpm_install(type: NpmTask) {
+    group = 'node'
+    args = ['install', 'cnpm', '--registry=https://registry.npm.taobao.org']
+}
+
+task start_web(type: NodeTask) {
+    script = file('scripts/dev-server.js')
+    args = []
+}
+
+task build_web(type: NodeTask) {
+    script = file('scripts/build.js')
+    args = []
+}
+
+docker {
+    baseImage jar.baseName
+    maintainer 'Li Xingping "lixingping233@gmail.com"'
+}
+
+task image(type: Docker, dependsOn: build_web) {
+    push = false
+    dryRun = true
+    dockerfile = file('Dockerfile')
+    doFirst {
+      copy {
+        from('dist') {
+          include '**/*'
+        }
+        into stageDir
+      }
+    }
+}
