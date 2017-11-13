@@ -15,11 +15,14 @@ import DemoPage from '@/views/components/DemoPage'
 import 'vue-toast/dist/vue-toast.min.css'
 import VueToast from 'vue-toast'
 import vueLogger from 'vue-logger'
+import BaiduMap from 'vue-baidu-map'
 
 Vue.component('vue-toast', VueToast);
 Vue.component('demo-page', DemoPage);
 Vue.use(VueMaterial);
-
+Vue.use(BaiduMap, {
+  ak: 'G8MfElBszl16ZhmHsVvAYcZOdvvIoVpx'
+});
 Vue.use(vueLogger, {
   prefix: new Date(),
   dev: true,
