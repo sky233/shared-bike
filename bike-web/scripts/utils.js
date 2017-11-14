@@ -29,8 +29,8 @@ exports.cssLoaders = options => {
 
     if (options.extract) {
       return ExtractTextPlugin.extract({
-        fallbackLoader: 'style-loader',
-        loader: sourceLoader
+          fallback: 'style-loader',
+          use: sourceLoader
       })
     } else {
       return ['vue-style-loader', sourceLoader].join('!')
@@ -56,8 +56,8 @@ exports.styleLoaders = options => {
   for (const extension in loaders) {
     const loader = loaders[extension]
     output.push({
-      test: new RegExp('\\.' + extension + '$'),
-      loader: loader
+        test: new RegExp('\\.' + extension + '$'),
+        use: loader
     })
   }
   return output

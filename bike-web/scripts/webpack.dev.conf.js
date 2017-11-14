@@ -9,7 +9,7 @@ const utils = require('./utils')
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(name => {
-  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
+  baseWebpackConfig.entry[name] = ['./scripts/dev-client'].concat(baseWebpackConfig.entry[name])
 })
 
 module.exports = merge(baseWebpackConfig, {
