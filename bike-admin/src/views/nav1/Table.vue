@@ -107,7 +107,7 @@
 <script>
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
-	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
+	import { getBikesListPage, removeUser, batchRemoveUser, editBike, addUser } from '../../api/api';
   import ElCol from "element-ui/packages/col/src/col";
 
 	export default {
@@ -175,7 +175,7 @@
 				};
 				this.listLoading = true;
 				//NProgress.start();
-				getUserListPage(para).then((res) => {
+				getBikesListPage(para).then((res) => {
 					this.total = res.data.total;
 					this.users = res.data.users;
 					this.listLoading = false;
@@ -228,7 +228,7 @@
 							//NProgress.start();
 							let para = Object.assign({}, this.editForm);
 							para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
-							editUser(para).then((res) => {
+							editBike(para).then((res) => {
 								this.editLoading = false;
 								//NProgress.done();
 								this.$message({

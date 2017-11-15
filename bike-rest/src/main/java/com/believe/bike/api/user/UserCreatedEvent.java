@@ -12,8 +12,9 @@ import java.io.Serializable;
 @Value
 public class UserCreatedEvent implements Serializable {
 
-  private final UserId identifier;
-  private final String cellNo;
-  private final String passwordHash;
+  private UserId identifier;
+  private String cellNo;
+  private String realName;
+  private String passwordHash;
 
 }

@@ -32,11 +32,11 @@ public class User {
   private String cellNo;
   private String passwordHash;
 
-  @AggregateMember
+//  @AggregateMember
   private UserAccount account;
 
-  public User(UserId identifier, String username, String password) {
-    apply(new UserCreatedEvent(identifier, username, hashOf(password)));
+  public User(UserId identifier, String username, String realName, String password) {
+    apply(new UserCreatedEvent(identifier, username, realName,  hashOf(password)));
   }
 
   public boolean authenticate(String password) {

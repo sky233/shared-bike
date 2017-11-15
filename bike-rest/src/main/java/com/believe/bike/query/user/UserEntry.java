@@ -23,6 +23,9 @@ import javax.persistence.Table;
 @ToString(callSuper = true)
 public class UserEntry extends Domain<String> {
 
+  @Column(name = "real_name")
+  private String realName;
+
   @NotBlank
   @Column(unique = true, nullable = false)
   private String cellNo;

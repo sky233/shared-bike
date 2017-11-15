@@ -25,15 +25,16 @@ public class UserHandleListener {
   @EventHandler
   public void handle(final UserCreatedEvent event, @Timestamp Instant timestamp, @SequenceNumber Long version) {
     log.info("UserCreatedEvent: [{}] ", event.getIdentifier());
-    UserEntry bike = new UserEntry();
-    bike.setId(event.getIdentifier().getIdentifier());
-    bike.setCellNo(event.getCellNo());
-    bike.setPassword(event.getPasswordHash());
-    bike.setAggregateVersion(version);
+    UserEntry userEntry = new UserEntry();
+    userEntry.setId(event.getIdentifier().getIdentifier());
+    userEntry.setCellNo(event.getCellNo());
+    userEntry.setRealName(event.getRealName());
+    userEntry.setPassword(event.getPasswordHash());
+    userEntry.setAggregateVersion(version);
 
-    bike.setCreatedDate(timestamp);
-    bike.setLastModifiedDate(timestamp);
-    userEntryRepository.save(bike);
+    userEntry.setCreatedDate(timestamp);
+    userEntry.setLastModifiedDate(timestamp);
+    userEntryRepository.save(userEntry);
   }
 
 }

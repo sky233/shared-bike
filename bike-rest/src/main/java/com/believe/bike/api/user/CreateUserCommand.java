@@ -18,7 +18,8 @@ public class CreateUserCommand {
   @TargetAggregateIdentifier
   private final UserId identifier;
   @NotBlank
-  private final String cellNo;
+  private String cellNo;
+  private String realName;
   private String password;
 
   public CreateUserCommand(String cellNo, String password) {

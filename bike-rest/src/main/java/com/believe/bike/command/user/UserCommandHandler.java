@@ -34,7 +34,7 @@ public class UserCommandHandler {
     if (null != userEntry) {
       throw new DomainException("手机号已注册过");
     }
-    repository.newInstance(() -> new User(identifier, command.getCellNo(), command.getPassword()));
+    repository.newInstance(() -> new User(identifier, command.getCellNo(), command.getRealName(), command.getPassword()));
     return identifier;
   }
 
