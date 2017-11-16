@@ -18,6 +18,7 @@
     "nprogress": "^0.2.0",
     "vue": "^2.2.2",
     "vue-baidu-map": "^0.18.7",
+    "vue-logger": "^0.0.3",
     "vue-router": "^2.3.0",
     "vuex": "^2.0.0-rc.6"
   },

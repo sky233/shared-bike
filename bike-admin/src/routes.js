@@ -12,6 +12,7 @@ import echarts from './views/charts/echarts.vue'
 
 import Users from './views/users/Users.vue'
 import Bikes from './views/bikes/Bikes.vue'
+import BikeForm from './views/bikes/BikeForm.vue'
 
 let routes = [
     {
@@ -42,6 +43,7 @@ let routes = [
         iconCls: 'el-icon-message',//图标样式class
         children: [
             {path: '/bikes', component: Bikes, name: '列表'},
+            {path: '/bikes/create', component: BikeForm, name: '增加'},
         ]
     },
     {

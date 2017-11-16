@@ -82,7 +82,7 @@
 <script>
     import util from '../../common/js/util'
     //import NProgress from 'nprogress'
-    import {getBikesListPage, editBike, addUser} from '../../api/api';
+    import {getUsersListPage, editUser, addUser} from '../../api/api';
     import ElCol from "element-ui/packages/col/src/col";
 
     export default {
@@ -170,7 +170,7 @@
                             this.editLoading = true;
                             //NProgress.start();
                             let params = Object.assign({}, this.editForm);
-                            editBike(params).then((res) => {
+                            editUser(params).then((res) => {
                                 this.editLoading = false;
                                 //NProgress.done();
                                 this.$message({

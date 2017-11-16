@@ -37,8 +37,8 @@ public class BikeEntry extends Domain<String> {
 
   @Embedded
   @AttributeOverrides({
-    @AttributeOverride(name = "longitude", column = @Column(name = "longitude", scale = 10, precision = 15)),
-    @AttributeOverride(name = "latitude", column = @Column(name = "latitude", scale = 10, precision = 15))
+    @AttributeOverride(name = "lng", column = @Column(name = "lng", scale = 10, precision = 15)),
+    @AttributeOverride(name = "lat", column = @Column(name = "lat", scale = 10, precision = 15))
   })
   private Position position;
 

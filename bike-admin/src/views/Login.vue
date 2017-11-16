@@ -45,7 +45,15 @@
       },
       handleSubmit2(ev) {
         var _this = this;
-        this.$refs.ruleForm2.validate((valid) => {
+          sessionStorage.setItem('user', JSON.stringify({
+              id: 1,
+              username: 'admin',
+              password: '123456',
+              avatar: 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png',
+              name: '某某'
+          }));
+          this.$router.push({ path: '/table' });
+/*        this.$refs.ruleForm2.validate((valid) => {
           if (valid) {
             //_this.$router.replace('/table');
             this.logining = true;
@@ -69,7 +77,7 @@
             console.log('error submit!!');
             return false;
           }
-        });
+        });*/
       }
     }
   }

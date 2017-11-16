@@ -7,6 +7,8 @@ import com.believe.bike.query.bike.repositories.BikeEntryRepository;
 import com.believe.bike.rest.dto.BikeDto;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,12 +33,17 @@ public class BikeController {
     return bikeEntryRepository.findAll();
   }
 
+  @GetMapping({"/of_pages"})
+  public Page<BikeEntry> users(Pageable pageable) {
+    return bikeEntryRepository.findAll(pageable);
+  }
+
   @GetMapping({"/{identifier}"})
   public BikeEntry bikes(@PathVariable("identifier") String identifier) {
     return bikeEntryRepository.findOne(identifier);
   }
 
-  @PostMapping({"/"})
+  @PostMapping
   public String bikes(@RequestBody BikeDto bikeDto) {
     BikeId identifier = new BikeId();
     commandGateway.sendAndWait(new PutOnMarketCommand(identifier, bikeDto.getBikeNumber(), bikeDto.getPosition()));

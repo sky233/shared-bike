@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class Position {
 
   //经度
-  private BigDecimal longitude;
+  private BigDecimal lng;
   //纬度
-  private BigDecimal latitude;
+  private BigDecimal lat;
 }

@@ -14,12 +14,19 @@ import routes from './routes'
 // Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
 import BaiduMap from 'vue-baidu-map'
+import vueLogger from 'vue-logger'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(BaiduMap, {
   ak: 'G8MfElBszl16ZhmHsVvAYcZOdvvIoVpx'
+});
+Vue.use(vueLogger, {
+    prefix: new Date(),
+    dev: true,
+    shortname: true,
+    levels: ['log', 'warn', 'debug', 'error', 'dir', 'info']
 });
 
 //NProgress.configure({ showSpinner: false });

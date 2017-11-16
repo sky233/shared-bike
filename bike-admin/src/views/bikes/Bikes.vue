@@ -7,7 +7,7 @@
           <el-input v-model="filters.bikeNumber" placeholder="编号"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getUsers">查询</el-button>
+          <el-button type="primary" v-on:click="getBikes">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -24,9 +24,13 @@
       </el-table-column>
       <el-table-column prop="id" label="ID" width="300" sortable>
       </el-table-column>
-      <el-table-column prop="bikeNumber" label="编号" width="160" sortable>
+      <el-table-column prop="bikeNumber" label="编号" width="120" sortable>
       </el-table-column>
-      <el-table-column prop="status" label="状态" width="300" sortable>
+      <el-table-column prop="position" label="位置" width="200" :formatter="formatPosition" sortable>
+      </el-table-column>
+      <el-table-column prop="status" label="状态" width="150" sortable>
+      </el-table-column>
+      <el-table-column prop="remark" label="备注" width="150" sortable>
       </el-table-column>
       <el-table-column label="操作" width="150">
         <template scope="scope">
@@ -41,13 +45,28 @@
                      style="float:right;">
       </el-pagination>
     </el-col>
+
+    <!--编辑界面-->
+    <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
+      <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+        <el-form-item label="自行车编号">
+          <el-input v-model="editForm.bikeNumber"></el-input>
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input type="textarea" v-model="editForm.remark"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="editFormVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+      </div>
+    </el-dialog>
   </section>
 </template>
 
 <script>
     import util from '../../common/js/util'
-    //import NProgress from 'nprogress'
-    import {getUsersListPage, editUser, addUser} from '../../api/api';
+    import {getBikesListPage, editBike, addBike} from '../../api/api';
     import ElCol from "element-ui/packages/col/src/col";
 
     export default {
@@ -55,8 +74,7 @@
         data() {
             return {
                 filters: {
-                    realName: '',
-                    cellNo: ''
+                    bikeNumber: ''
                 },
                 bikes: [],
                 total: 0,
@@ -68,46 +86,41 @@
                 editLoading: false,
                 editFormRules: {
                     name: [
-                        {required: true, message: '请输入姓名', trigger: 'blur'}
+                        {required: true, message: '请输入编号', trigger: 'blur'}
                     ]
                 },
                 //编辑界面数据
                 editForm: {
                     id: '',
-                    realName: '',
-                    cellNo: ''
+                    bikeNumber: '',
+                    remark: ''
                 },
 
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
                     name: [
-                        {required: true, message: '请输入姓名', trigger: 'blur'}
+                        {required: true, message: '请输入编号', trigger: 'blur'}
                     ]
                 },
-                //新增界面数据
-                addForm: {
-                    id: '',
-                    realName: '',
-                    cellNo: ''
-                }
             }
         },
         methods: {
+            formatPosition(row, column){
+                return "(" + row.position.lng + ',' + row.position.lat + ")";
+            },
             handleCurrentChange(val) {
                 this.page = val;
-                this.getUsers();
+                this.getBikes();
             },
-            //获取用户列表
-            getUsers() {
+            getBikes() {
                 let params = {
                     page: this.page,
-                    realName: this.filters.realName,
-                    cellNo: this.filters.cellNo,
+                    bikeNumber: this.filters.bikeNumber,
                 };
                 this.listLoading = true;
                 //NProgress.start();
-                getUsersListPage(params).then((res) => {
+                getBikesListPage(params).then((res) => {
                     this.total = res.data.totalElements;
                     this.bikes = res.data.content;
                     this.listLoading = false;
@@ -121,11 +134,7 @@
             },
             //显示新增界面
             handleAdd: function () {
-                this.addFormVisible = true;
-                this.addForm = {
-                    realName: '',
-                    cellNo: ''
-                };
+                this.$router.push({path: '/bikes/create'})
             },
             //编辑
             editSubmit: function () {
@@ -135,7 +144,7 @@
                             this.editLoading = true;
                             //NProgress.start();
                             let params = Object.assign({}, this.editForm);
-                            editUser(params).then((res) => {
+                            editBike(params).then((res) => {
                                 this.editLoading = false;
                                 //NProgress.done();
                                 this.$message({
@@ -144,7 +153,7 @@
                                 });
                                 this.$refs['editForm'].resetFields();
                                 this.editFormVisible = false;
-                                this.getUsers();
+                                this.getBikes();
                             });
                         });
                     }
@@ -158,7 +167,7 @@
                             this.addLoading = true;
                             //NProgress.start();
                             let params = Object.assign({}, this.addForm);
-                            addUser(params).then((res) => {
+                            addBike(params).then((res) => {
                                 this.addLoading = false;
                                 //NProgress.done();
                                 this.$message({
@@ -167,7 +176,7 @@
                                 });
                                 this.$refs['addForm'].resetFields();
                                 this.addFormVisible = false;
-                                this.getUsers();
+                                this.getBikes();
                             });
                         });
                     }
@@ -178,7 +187,7 @@
             },
         },
         mounted() {
-            this.getUsers();
+            this.getBikes();
         }
     }
 
