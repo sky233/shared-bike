@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../common/js/http';
 
 let base = process.env.API_URL;
 
@@ -8,9 +8,9 @@ export const getUserList = params => { return axios.get(`${base}/users`, { param
 
 export const getUsersListPage = params => { return axios.get(`${base}/users/of_pages`, { params: params }); };
 
-export const editUser = params => { return axios.put(`${base}/users`, { params: params }); };
+export const editUser = params => { return axios.put(`${base}/users`, params ); };
 
-export const addUser = params => { return axios.post(`${base}/users`, { params: params }); };
+export const addUser = params => { return axios.post(`${base}/users`, params ); };
 
 export const getBikesListPage = params => { return axios.get(`${base}/bikes/of_pages`, { params: params }); };
 

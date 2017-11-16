@@ -4,6 +4,9 @@
     <el-form-item label="自行车编号">
       <el-input v-model="form.bikeNumber"></el-input>
     </el-form-item>
+    <el-form-item label="位置">
+      <el-input disabled v-model="showPosition" :formatter="formatPosition"></el-input>
+    </el-form-item>
     <el-form-item label="投放位置">
       <baidu-map class="map-container" center="成都" :zoom="14" :scroll-wheel-zoom="true" @click='getClickMapData'>
         <bm-city-list anchor="BMAP_ANCHOR_TOP_LEFT"></bm-city-list>
@@ -31,41 +34,45 @@
   }
 </style>
 <script>
-    import {addBike} from '../../api/api';
-    export default {
-        data() {
-            return {
-                form: {
-                    bikeNumber: '',
-                    position: {lng: '0', lat: '0'},
-                    remark: ''
-                }
-            }
-        },
-        methods: {
-            getClickMapData({point}) {
-                this.$info(point);
-                this.form.position = Object.assign({}, point);
-            },
-            onSubmit() {
-                this.$info('Submit!');
-                this.$refs.form.validate((valid) => {
-                    if (valid) {
-                        this.$confirm('确认提交吗？', '提示', {}).then(() => {
-                            let params = Object.assign({}, this.form);
-                            addBike(params).then((res) => {
-                                this.$message({
-                                    message: '提交成功',
-                                    type: 'success'
-                                });
-                                this.$refs['from'].resetFields();
-                                this.$router.push({path: '/bikes'})
-                            });
-                        });
-                    }
-                });
-            }
+  import {addBike} from '../../api/api';
+  export default {
+    data() {
+      return {
+        showPosition: '[0,0]',
+        form: {
+          bikeNumber: '',
+          position: {lng: '0', lat: '0'},
+          remark: ''
         }
+      }
+    },
+    methods: {
+      formatPosition(row, column){
+        return "(" + row.position.lng + ',' + row.position.lat + ")";
+      },
+      getClickMapData({point}) {
+        this.$info(point);
+        this.form.position = Object.assign({}, point);
+        this.showPosition = '[' + point.lng + ',' + point.lat + ']'
+      },
+      onSubmit() {
+        this.$info('Submit!');
+        this.$refs.form.validate((valid) => {
+          if (valid) {
+            this.$confirm('确认提交吗？', '提示', {}).then(() => {
+              let params = Object.assign({}, this.form);
+              addBike(params).then((res) => {
+                this.$message({
+                  message: '提交成功',
+                  type: 'success'
+                });
+                this.$router.push({path: '/bikes'})
+              });
+            });
+          }
+        });
+      }
     }
+  }
 
 </script>
