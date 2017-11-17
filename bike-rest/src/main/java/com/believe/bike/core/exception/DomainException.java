@@ -9,16 +9,31 @@ import lombok.Getter;
  */
 @Getter
 public class DomainException extends RuntimeException {
+  private final int code;
+  private String messageCode;
+  private Object[] args;
 
-  public DomainException() {
+  public DomainException(int code) {
     super();
+    this.code = code;
   }
 
-  public DomainException(String message) {
-    super(message);
+  public DomainException(int code, String messageCode, Object... args) {
+    super(messageCode);
+    this.code = code;
+    this.messageCode = messageCode;
+    this.args = args;
   }
 
-  public DomainException(String message, Throwable cause) {
-    super(message, cause);
+  public DomainException(Throwable cause, int code, String messageCode, Object... args) {
+    super(messageCode, cause);
+    this.code = code;
+    this.messageCode = messageCode;
+    this.args = args;
   }
+
+  public static DomainException unKnown() {
+    return new DomainException(ErrorCode.UNKNOWN_ERROR, "Internal Error.");
+  }
+
 }

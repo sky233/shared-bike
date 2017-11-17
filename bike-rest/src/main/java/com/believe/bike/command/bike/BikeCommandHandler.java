@@ -3,6 +3,7 @@ package com.believe.bike.command.bike;
 import com.believe.bike.api.bike.BikeId;
 import com.believe.bike.api.bike.PutOnMarketCommand;
 import com.believe.bike.core.exception.DomainException;
+import com.believe.bike.core.exception.ErrorCode;
 import com.believe.bike.query.bike.BikeEntry;
 import com.believe.bike.query.bike.repositories.BikeEntryRepository;
 import org.axonframework.commandhandling.CommandHandler;
@@ -29,7 +30,7 @@ public class BikeCommandHandler {
     BikeId identifier = command.getIdentifier();
     BikeEntry userEntry = bikeEntryRepository.findByBikeNumber(command.getBikeNumber());
     if (null != userEntry) {
-      throw new DomainException("编号重复");
+      throw new DomainException(ErrorCode.VIOLATION_CONSTRAINT, "com.believe.bike.error.bikeNumber.repeated", command.getBikeNumber());
     }
     repository.newInstance(() -> new Bike(identifier, command.getBikeNumber(), command.getPosition()));
     return identifier;

@@ -2,6 +2,7 @@ package com.believe.bike.query.rent;
 
 import com.believe.bike.api.rent.RentBikeStartedEvent;
 import com.believe.bike.core.exception.DomainException;
+import com.believe.bike.core.exception.ErrorCode;
 import com.believe.bike.query.rent.repositories.BikeRentEntryRepository;
 import com.believe.bike.query.user.repositories.UserEntryRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,7 @@ public class BikeRentHandleListener {
     bikeRent.setId(event.getBikeRentIdentifier().getIdentifier());
 
     bikeRent.setRenter(userEntryRepository.findOneById(event.getUserIdentifier().getIdentifier()).orElseThrow(
-      () -> new DomainException("用户不存在")
+      () -> new DomainException(ErrorCode.VIOLATION_CONSTRAINT, "com.believe.bike.error.user.NotFound")
     ));
 
     bikeRent.setAggregateVersion(version);

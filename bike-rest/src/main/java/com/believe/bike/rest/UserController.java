@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class UserController {
   }
 
   @PostMapping
-  public String users(@RequestBody UserDto userDto) {
+  public String users(@Valid @RequestBody UserDto userDto) {
     CreateUserCommand command = new CreateUserCommand(userDto.getCellNo(), userDto.getPassword());
     command.setRealName(userDto.getRealName());
     commandGateway.sendAndWait(command);
