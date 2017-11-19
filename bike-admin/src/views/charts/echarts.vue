@@ -14,21 +14,23 @@
         <div id="chartPie" style="width:100%; height:400px;"></div>
       </el-col>
       <el-col :span="12">
-<!--        <baidu-map class="map" center="北京">
-          <bm-city-list anchor="BMAP_ANCHOR_TOP_LEFT"></bm-city-list>
-          <bm-overview-map anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :isOpen="true"></bm-overview-map>
-          <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
-          <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
-          <bm-marker :position="{lng: 116.404, lat: 39.915}"  @click="viewPosition" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
-            <bm-label content="选择位置" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
-          </bm-marker>
-        </baidu-map>-->
+        <!--        <baidu-map class="map" center="北京">
+                  <bm-city-list anchor="BMAP_ANCHOR_TOP_LEFT"></bm-city-list>
+                  <bm-overview-map anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :isOpen="true"></bm-overview-map>
+                  <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
+                  <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
+                  <bm-marker :position="{lng: 116.404, lat: 39.915}"  @click="viewPosition" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
+                    <bm-label content="选择位置" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
+                  </bm-marker>
+                </baidu-map>-->
 
-        <baidu-map  class="map" center="北京" @click='getClickMapData'>
-          <!-- 自定义标记和信息框 -->
-          <bm-marker :position="markerPoint"  :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
-            <bm-label content="选择位置" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
-          </bm-marker>
+        <baidu-map class="map-container" center="成都" :zoom="14"  @click='getClickMapData'>
+        <div v-for='v, i in markerArr' :key='v.title'>
+          <bm-marker :position="v.markerPoint" :dragging="true" ></bm-marker>
+          <bm-info-window :position="v.markerPoint" :title="v.title" :show="v.ifShowWindow" >
+            <p v-text="v.contents"></p>
+          </bm-info-window>
+        </div>
         </baidu-map>
 
       </el-col>
@@ -41,13 +43,14 @@
 
 <script>
   import echarts from 'echarts'
-//  import { BmMarker, BmInfoWindow } from 'vue-baidu-map'
+  import {BmMarker, BmInfoWindow} from 'vue-baidu-map'
+  import {getBikesList} from '../../api/api';
 
   export default {
     data() {
       return {
-        markerArr:[],
-        markerPoint :{lng: 116.404, lat: 39.915},
+        markerArr: [],
+        markerPoint: {lng: 116.404, lat: 39.915},
         chartColumn: null,
         chartBar: null,
         chartLine: null,
@@ -55,12 +58,28 @@
       }
     },
     methods: {
-      getClickMapData({ point }) {
-        console.log(point);
+      getClickMapData() {
+        getBikesList({}).then((res) => {
+//          this.$info(res.data);
+          var arr = [];
+          res.data.forEach(function (value) {
+            console.log(value);
+            arr.push({
+              markerPoint: value.position,
+              ifShowWindow: false,
+              title: 'Bike',
+              contents: '1'
+            })
+          });
+          this.markerArr = arr;
+        });
       }
     },
     mounted: function () {
       var _this = this;
+
+      this.getClickMapData();
+
       //基于准备好的dom，初始化echarts实例
       this.chartColumn = echarts.init(document.getElementById('chartColumn'));
       this.chartBar = echarts.init(document.getElementById('chartBar'));
@@ -229,7 +248,7 @@
   }
 
   /* The container of BaiduMap must be set width & height. */
-  .map {
+  .map-container {
     width: 100%;
     height: 500px;
   }

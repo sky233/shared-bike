@@ -14,6 +14,8 @@ export const addUser = params => { return axios.post(`${base}/users`, params ); 
 
 export const getBikesListPage = params => { return axios.get(`${base}/bikes/of_pages`, { params: params }); };
 
+export const getBikesList = params => { return axios.get(`${base}/bikes`, { params: params }); };
+
 export const addBike = params => { return axios.post(`${base}/bikes`, params); };
 
 export const editBike = params => { return axios.put(`${base}/bikes`, params); };

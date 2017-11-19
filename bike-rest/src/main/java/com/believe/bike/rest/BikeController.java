@@ -28,7 +28,7 @@ public class BikeController {
   @Autowired
   private BikeEntryRepository bikeEntryRepository;
 
-  @GetMapping({"/"})
+  @GetMapping
   public List<BikeEntry> bikes() {
     return bikeEntryRepository.findAll();
   }
