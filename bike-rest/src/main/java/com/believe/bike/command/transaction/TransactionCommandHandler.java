@@ -45,7 +45,7 @@ public class TransactionCommandHandler {
   @CommandHandler
   public TransactionId handle(CompleteTransactionCommand command) throws Exception {
     TransactionId identifier = command.getIdentifier();
-    final String remark = defaultRemark(command.getRemark(), command.getType(), TransactionStatus.PENDING);
+    final String remark = defaultRemark(command.getRemark(), command.getType(), TransactionStatus.COMPLETE);
     repository.load(command.getIdentifier().getIdentifier()).invoke(transaction -> transaction.complete(command, remark));
     return identifier;
   }
@@ -53,7 +53,7 @@ public class TransactionCommandHandler {
   @CommandHandler
   public TransactionId handle(CancelTransactionCommand command) throws Exception {
     TransactionId identifier = command.getIdentifier();
-    final String remark = defaultRemark(command.getRemark(), command.getType(), TransactionStatus.PENDING);
+    final String remark = defaultRemark(command.getRemark(), command.getType(), TransactionStatus.CANCEL);
     repository.load(command.getIdentifier().getIdentifier()).invoke(transaction -> transaction.cancel(command, remark));
     return identifier;
   }

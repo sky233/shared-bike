@@ -2,7 +2,7 @@ spring:
   application:
     name: shared-bike
   profiles:
-    active: dev
+    active: local
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -30,19 +30,28 @@ server:
 
 ---
 spring:
-    profiles: dev
-    datasource:
-      driverClassName: org.h2.Driver
-      url: jdbc:h2:mem:testdb:MODE=MySQL;DB_CLOSE_ON_EXIT=FALSE
-      username: sa
-      password:
-    h2:
-      console:
-        enabled: true
-    jpa:
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.H2Dialect
+  profiles: dev
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb:MODE=MySQL;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+---
+spring:
+  profiles: local
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/sharedBike?useSSL=false&useUnicode=true&amp;characterEncoding=UTF-8
+    username: sharedBike
+    password: sharedBike
 
 ---
 spring:
