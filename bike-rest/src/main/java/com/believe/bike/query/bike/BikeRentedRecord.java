@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * <p> The describe </p>
@@ -23,6 +20,7 @@ import javax.persistence.Table;
 @ToString(callSuper = true, exclude = {"bike"})
 public class BikeRentedRecord extends Record<String> {
 
+  @Column
   private String renter;
 
   @JsonIgnore

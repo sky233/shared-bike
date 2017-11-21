@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * <p> The describe </p>
+ * <p> The phone number validator. </p>
  *
  * @author Li Xingping
  */

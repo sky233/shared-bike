@@ -34,7 +34,7 @@ public class BikeController {
   }
 
   @GetMapping({"/of_pages"})
-  public Page<BikeEntry> users(Pageable pageable) {
+  public Page<BikeEntry> bikes(Pageable pageable) {
     return bikeEntryRepository.findAll(pageable);
   }
 

@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Li Xingping
  */
-public interface AdminRepository extends JpaRepository<Admin, Long> {
+public interface AdminRepository extends JpaRepository<Admin, String> {
 
 }

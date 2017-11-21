@@ -35,6 +35,9 @@ public class BikeEntry extends Domain<String> {
   @Enumerated(EnumType.STRING)
   private BikeStatus status;
 
+  @Column
+  private String remark;
+
   @Embedded
   @AttributeOverrides({
     @AttributeOverride(name = "lng", column = @Column(name = "lng", scale = 10, precision = 15)),

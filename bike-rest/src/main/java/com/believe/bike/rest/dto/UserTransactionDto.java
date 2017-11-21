@@ -1,11 +1,10 @@
 package com.believe.bike.rest.dto;
 
-import com.believe.bike.core.model.Position;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 /**
  * <p> The describe </p>
@@ -13,12 +12,13 @@ import javax.validation.constraints.NotNull;
  * @author Li Xingping
  */
 @Data
-public class BikeDto {
+public class UserTransactionDto {
 
+  private String tradeNo;
   @NotBlank
-  @Max(value = 8)
-  private String bikeNumber;
+  private String userId;
   @NotNull
-  private Position position;
+  private BigDecimal amount;
+  private String remark;
 
 }

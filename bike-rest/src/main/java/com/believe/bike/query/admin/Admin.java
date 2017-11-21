@@ -1,7 +1,10 @@
 package com.believe.bike.query.admin;
 
+import com.believe.bike.core.model.PersistenceModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -16,15 +19,9 @@ import java.time.Instant;
 @Data
 @Entity
 @Table(name = "admin")
-public class Admin {
-
-  @Id
-  @GeneratedValue
-  private Long id;
-
-  @NotNull
-  @Column(name = "created_date", nullable = false, updatable = false)
-  private Instant createdDate;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class Admin extends PersistenceModel {
 
   @NotBlank
   @Column(unique = true, nullable = false)

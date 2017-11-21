@@ -4,10 +4,14 @@ import com.believe.bike.command.bike.Bike;
 import com.believe.bike.command.bike.BikeCommandHandler;
 import com.believe.bike.command.rent.BikeRent;
 import com.believe.bike.command.rent.BikeRentCommandHandler;
+import com.believe.bike.command.transaction.Transaction;
+import com.believe.bike.command.transaction.TransactionCommandHandler;
 import com.believe.bike.command.user.User;
 import com.believe.bike.command.user.UserCommandHandler;
+import com.believe.bike.core.help.MessagesHelper;
 import com.believe.bike.query.bike.repositories.BikeEntryRepository;
 import com.believe.bike.query.rent.repositories.BikeRentEntryRepository;
+import com.believe.bike.query.transaction.repositories.UserTransactionRepository;
 import com.believe.bike.query.user.repositories.UserEntryRepository;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.spring.config.AxonConfiguration;
@@ -38,6 +42,12 @@ public class BusinessConfig {
   @Autowired
   private BikeRentEntryRepository bikeRentEntryRepository;
 
+  @Autowired
+  private UserTransactionRepository userTransactionRepository;
+
+  @Autowired
+  private MessagesHelper messagesHelper;
+
   @Bean
   public UserCommandHandler userCommandHandler() {
     return new UserCommandHandler(axonConfiguration.repository(User.class), userEntryRepository, eventBus);
@@ -52,4 +62,10 @@ public class BusinessConfig {
   public BikeRentCommandHandler bikeRentCommandHandler() {
     return new BikeRentCommandHandler(axonConfiguration.repository(BikeRent.class), bikeRentEntryRepository);
   }
+
+  @Bean
+  public TransactionCommandHandler transactionCommandHandler() {
+    return new TransactionCommandHandler(axonConfiguration.repository(Transaction.class), userTransactionRepository, userEntryRepository, messagesHelper, eventBus);
+  }
+
 }
