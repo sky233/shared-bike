@@ -38,7 +38,7 @@ public class TransactionCommandHandler {
     TransactionId identifier = command.getIdentifier();
     String remark = defaultRemark(command.getRemark(), command.getType(), TransactionStatus.PENDING);
     repository.newInstance(() -> new Transaction(
-      identifier, command.getTradeNo(), command.getUserId(), command.getType(), command.getAmount(), remark));
+      identifier, command.getTradeNo(), command.getUserId(), command.getType(), command.getAmount(), remark, command.getPaymentChannel()));
     return identifier;
   }
 

@@ -1,5 +1,6 @@
 package com.believe.bike.command.transaction;
 
+import com.believe.bike.api.payment.PaymentChannel;
 import com.believe.bike.api.transaction.*;
 import com.believe.bike.api.user.UserId;
 import com.believe.bike.core.utils.GeneralUtils;
@@ -35,14 +36,15 @@ public class Transaction {
   private TransactionStatus status;
 
   // todo 修改 TradeNo 默认生成方式
-  public Transaction(TransactionId identifier, String tradeNo, UserId userId, TransactionType type, BigDecimal amount, String remark) {
+  public Transaction(TransactionId identifier, String tradeNo, UserId userId, TransactionType type, BigDecimal amount, String remark, PaymentChannel paymentChannel) {
     apply(new TransactionStartedEvent(identifier,
-        isNotBlank(tradeNo) ? tradeNo : GeneralUtils.randomNumeric(10),
+        isNotBlank(tradeNo) ? tradeNo : GeneralUtils.randomNumeric(16),
         userId,
         type,
         TransactionStatus.PENDING,
         amount,
-        remark
+        remark,
+        paymentChannel
       )
     );
   }

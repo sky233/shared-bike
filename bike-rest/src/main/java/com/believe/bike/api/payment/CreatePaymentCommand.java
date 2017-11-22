@@ -1,10 +1,9 @@
-package com.believe.bike.api.transaction;
+package com.believe.bike.api.payment;
 
-import com.believe.bike.api.payment.PaymentChannel;
+import com.believe.bike.api.transaction.TransactionId;
 import com.believe.bike.api.user.UserId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 import javax.validation.constraints.NotNull;
@@ -16,21 +15,18 @@ import java.math.BigDecimal;
  * @author Li Xingping
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class StartingTransactionCommand {
-
+public class CreatePaymentCommand {
   @NotNull
   @TargetAggregateIdentifier
-  private TransactionId identifier;
-  private String tradeNo;
+  private final PaymentId identifier;
   @NotNull
   private UserId userId;
   @NotNull
-  private TransactionType type;
+  private TransactionId transactionId;
+  @NotNull
+  private PaymentChannel paymentChannel;
+  private String tradeNo;
   @NotNull
   private BigDecimal amount;
-
   private String remark;
-  private PaymentChannel paymentChannel;
 }

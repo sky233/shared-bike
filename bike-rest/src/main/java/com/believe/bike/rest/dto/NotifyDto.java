@@ -7,12 +7,12 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
- * <p> The describe </p>
+ * <p> By test </p>
  *
  * @author Li Xingping
  */
 @Data
-public class UserTransactionDto {
+public class NotifyDto {
 
   /**
    * The trade number in internal.

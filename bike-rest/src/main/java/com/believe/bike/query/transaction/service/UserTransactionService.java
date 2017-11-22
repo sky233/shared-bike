@@ -1,5 +1,6 @@
 package com.believe.bike.query.transaction.service;
 
+import com.believe.bike.query.transaction.PaymentTransaction;
 import com.believe.bike.query.transaction.UserTransaction;
 
 /**
@@ -9,4 +10,6 @@ import com.believe.bike.query.transaction.UserTransaction;
  */
 public interface UserTransactionService {
   UserTransaction save(UserTransaction userEntry);
+
+  PaymentTransaction save(PaymentTransaction paymentTransaction);
 }
